@@ -10,10 +10,15 @@ import {
 } from "semantic-ui-react";
 
 const Login = () => (
-  <Grid textAlign="center" style={{ height: "100vh" }} verticalAlign="middle">
+  <Grid
+    className="loginPage"
+    textAlign="center"
+    style={{ height: "100vh" }}
+    verticalAlign="middle"
+  >
     <Grid.Column style={{ maxWidth: 450 }}>
-      <Header as="h2" color="teal" textAlign="center">
-        <Image src="/logo.png" /> Log-in to your account
+      <Header className="loginFormLogo" as="h2" textAlign="center">
+        <Image src="/images/PantryKingLogo.png" /> Log-in to your pantry
       </Header>
       <Form size="large">
         <Segment stacked>
@@ -21,7 +26,7 @@ const Login = () => (
             fluid
             icon="user"
             iconPosition="left"
-            placeholder="E-mail address"
+            placeholder="Username"
           />
           <Form.Input
             fluid
@@ -31,7 +36,7 @@ const Login = () => (
             type="password"
           />
 
-          <Button color="teal" fluid size="large">
+          <Button id="loginFormButton" fluid size="large">
             Login
           </Button>
         </Segment>

@@ -11,3 +11,18 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.loginPage {
+  background-image: url(/images/PantryKingBackground.jpg);
+  background-attachment: fixed;
+  background-size: cover;
+  background-color: #464646;
+}
+
+.loginFormLogo {
+  background: #93a2a5;
+}
+
+#loginFormButton {
+  background: #5aa063;
+}
