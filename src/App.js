@@ -1,9 +1,9 @@
 import React from "react";
 import "./App.css";
-import { Icon } from "semantic-ui-react";
+import Login from "./components/Login";
 
 function App() {
-  return <Icon className="chess king" color="red" size="large" />;
+  return <Login />;
 }
 
 export default App;
