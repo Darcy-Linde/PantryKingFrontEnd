@@ -13,16 +13,31 @@ code {
 }
 
 .loginPage {
-  background-image: url(/images/PantryKingBackground.jpg);
+  background-image: url(/images/PantryKingTable.jpg);
   background-attachment: fixed;
   background-size: cover;
   background-color: #464646;
 }
 
-.loginFormLogo {
-  background: #93a2a5;
+#loginFormButton {
+  background: #63bb6e;
+  color: #ffffff;
 }
 
-#loginFormButton {
-  background: #5aa063;
+#bottomHeader {
+  background-color: #f8f8f9;
+}
+
+.signUp {
+  background: #f8f8f9;
+}
+
+.signUpLogo {
+  margin: 10px;
+}
+
+#signUpButton {
+  background: #63bb6e;
+  color: #ffffff;
+  margin: 10px;
 }

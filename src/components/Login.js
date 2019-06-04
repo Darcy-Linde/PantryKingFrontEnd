@@ -1,24 +1,16 @@
 import React from "react";
-import {
-  Button,
-  Form,
-  Grid,
-  Header,
-  Image,
-  Message,
-  Segment
-} from "semantic-ui-react";
+import { Button, Form, Grid, Header, Image, Segment } from "semantic-ui-react";
 
-const Login = () => (
+const LogIn = () => (
   <Grid
     className="loginPage"
     textAlign="center"
-    style={{ height: "100vh" }}
+    style={{ height: "110vh" }}
     verticalAlign="middle"
   >
     <Grid.Column style={{ maxWidth: 450 }}>
-      <Header className="loginFormLogo" as="h2" textAlign="center">
-        <Image src="/images/PantryKingLogo.png" /> Log-in to your pantry
+      <Header block as="h2" textAlign="center">
+        <Image src="/images/PantryKingLogo.png" /> Log in to your pantry
       </Header>
       <Form size="large">
         <Segment stacked>
@@ -41,11 +33,11 @@ const Login = () => (
           </Button>
         </Segment>
       </Form>
-      <Message>
-        New to us? <a href="#">Sign Up</a>
-      </Message>
+      <Header id="bottomHeader" bottom attached>
+        Don't have a pantry? <a href="/signup">Sign Up</a>
+      </Header>
     </Grid.Column>
   </Grid>
 );
 
-export default Login;
+export default LogIn;
