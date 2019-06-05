@@ -3,21 +3,15 @@ import ReactDOM from "react-dom";
 import store from "./store";
 import { Provider } from "react-redux";
 import App from "./App";
-import LogIn from "./components/LogIn";
-import SignUp from "./components/SignUp";
 import "./index.css";
 import "semantic-ui/dist/semantic.min.css";
-import { BrowserRouter as Router, Route } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
+import { BrowserRouter as Router } from "react-router-dom";
 
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <React.Fragment>
-        <Route exact path="/" render={App} />
-        <Route exact path="/login" render={LogIn} />
-        <Route exact path="/signup" render={SignUp} />
-      </React.Fragment>
+      <App />
     </Router>
   </Provider>,
   document.getElementById("root")
