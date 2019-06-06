@@ -1,5 +1,6 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Nav from "./Nav";
+import Recipes from "./Recipes";
 import { connect } from "react-redux";
 
 class Home extends Component {
@@ -16,7 +17,12 @@ class Home extends Component {
   };
 
   render() {
-    return <Nav />;
+    return (
+      <Fragment>
+        <Nav />
+        <Recipes />
+      </Fragment>
+    );
   }
 }
 
