@@ -3,18 +3,14 @@ import { Icon, Menu } from "semantic-ui-react";
 import { connect } from "react-redux";
 
 class Nav extends Component {
-  state = { activeItem: "pantry" };
-
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+  handleItemClick = (e, { name }) => this.props.dispatch({ type: name });
 
   render() {
-    const { activeItem } = this.state;
-
     return (
       <Menu icon="labeled" widths={4}>
         <Menu.Item
-          name="pantry"
-          active={activeItem === "pantry"}
+          name="PANTRY"
+          active={this.props.nav_item === "PANTRY"}
           onClick={this.handleItemClick}
         >
           <Icon name="home" color="green" />
@@ -22,8 +18,8 @@ class Nav extends Component {
         </Menu.Item>
 
         <Menu.Item
-          name="recipes"
-          active={activeItem === "recipes"}
+          name="RECIPES"
+          active={this.props.nav_item === "RECIPES"}
           onClick={this.handleItemClick}
         >
           <Icon name="book" color="yellow" />
@@ -31,8 +27,8 @@ class Nav extends Component {
         </Menu.Item>
 
         <Menu.Item
-          name="shopping list"
-          active={activeItem === "shopping list"}
+          name="SHOPPING_LIST"
+          active={this.props.nav_item === "SHOPPING_LIST"}
           onClick={this.handleItemClick}
         >
           <Icon name="list alternate outline" color="olive" />
@@ -41,7 +37,7 @@ class Nav extends Component {
 
         <Menu.Item
           name="log out"
-          active={activeItem === "log out"}
+          active={this.props.nav_item === "log out"}
           onClick={this.handleItemClick}
         >
           <Icon name="power off" color="teal" />
@@ -52,4 +48,8 @@ class Nav extends Component {
   }
 }
 
-export default connect()(Nav);
+let mapStateToProps = state => {
+  return { nav_item: state.nav.activeItem };
+};
+
+export default connect(mapStateToProps)(Nav);

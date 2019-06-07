@@ -20,7 +20,6 @@ class Home extends Component {
     return (
       <Fragment>
         <Nav />
-        <Recipes />
       </Fragment>
     );
   }

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Container, Grid, Menu } from "semantic-ui-react";
 import { connect } from "react-redux";
 
 const api =
@@ -20,9 +21,17 @@ class Recipes extends Component {
 
   render() {
     return (
-      <div>
-        {console.log(this.fetchRecipesByIngredients(exampleIngredientArray))}
-      </div>
+      <Container>
+        <Grid>
+          <Grid.Column width={3}>
+            <Menu text vertical>
+              <Menu.Item header>Sort By</Menu.Item>
+              <Menu.Item name="My Recipes" />
+              <Menu.Item name="Search Recipes" />
+            </Menu>
+          </Grid.Column>
+        </Grid>
+      </Container>
     );
   }
 }
