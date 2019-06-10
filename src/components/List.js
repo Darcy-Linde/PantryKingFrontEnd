@@ -1,7 +1,17 @@
 import React from "react";
+import { Button, Icon, Form } from "semantic-ui-react";
 
 const List = () => {
-  return <h1>List Test</h1>;
+  return (
+    <Form>
+      <Form.Field>
+        <label>Search</label>
+        <input placeholder="Search" />
+      </Form.Field>
+
+      <Button type="submit">Submit</Button>
+    </Form>
+  );
 };
 
 export default List;

@@ -6,10 +6,21 @@ import {
   Icon,
   Button,
   Image,
+  Form,
   Modal
 } from "semantic-ui-react";
 
 class Pantry extends Component {
+  state = { formValue: "" };
+
+  updateFormValue = e => {
+    this.setState({ formValue: e.target.value });
+  };
+
+  searchSubmit = () => {
+    console.log(this.state.formValue);
+  };
+
   render() {
     return (
       <div>
@@ -55,6 +66,17 @@ class Pantry extends Component {
               <Icon name="search plus" color="green" />
               <Header.Content>Search & Add Ingredients</Header.Content>
             </Header>
+            <Form onSubmit={this.searchSubmit}>
+              <Form.Group inline>
+                <Form.Field>
+                  <label>Search For Ingredient</label>
+                  <input onChange={e => this.updateFormValue(e)} />
+                </Form.Field>
+                <Button type="submit" color="green">
+                  Search
+                </Button>
+              </Form.Group>
+            </Form>
             <Table color="green">
               <Table.Body>
                 <Table.Row>
