@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import Nav from "./Nav";
-import Recipes from "./Recipes";
+import Body from "./Body";
 import { connect } from "react-redux";
 
 class Home extends Component {
@@ -20,6 +20,7 @@ class Home extends Component {
     return (
       <Fragment>
         <Nav />
+        <Body />
       </Fragment>
     );
   }
