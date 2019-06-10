@@ -23,7 +23,7 @@ class Recipes extends Component {
   render() {
     return (
       <Grid>
-        <Grid.Column width={3}>
+        <Grid.Column width={4}>
           <Header as="h2" icon="food" content="Your Recipes" />
         </Grid.Column>
       </Grid>
