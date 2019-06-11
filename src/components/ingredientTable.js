@@ -26,10 +26,10 @@ class IngredientTable extends Component {
     return array;
   };
 
-  state = { ingredient: "", quantity: 1, unit: "teaspoon" };
+  state = { name: "", image: "", quantity: 1, unit: "teaspoon" };
 
-  resetState = name => {
-    this.setState({ ingredient: name, quantity: 1, unit: "teaspoon" });
+  resetState = (name, image) => {
+    this.setState({ name: name, image: image, quantity: 1, unit: "teaspoon" });
   };
 
   handleSubmit = e => {
@@ -39,7 +39,11 @@ class IngredientTable extends Component {
     console.log(this.state.unit);
     fetch("http://localhost:3000/api/v1/ingredients", {
       method: "POST",
-      Authorization: localStorage.getItem("token")
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token")
+      },
+      body: JSON.stringify(this.state)
     });
   };
 
@@ -65,7 +69,7 @@ class IngredientTable extends Component {
                       <Button
                         color="green"
                         fluid
-                        onClick={() => this.resetState(item.name)}
+                        onClick={() => this.resetState(item.name, item.image)}
                       >
                         Add Ingredient
                       </Button>
