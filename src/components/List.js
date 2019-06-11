@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Icon, Form } from "semantic-ui-react";
+import { Button, Form } from "semantic-ui-react";
 
 const List = () => {
   return (

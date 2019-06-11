@@ -1,24 +1,31 @@
 import React, { Component } from "react";
-import {
-  Grid,
-  Table,
-  Header,
-  Icon,
-  Button,
-  Image,
-  Form,
-  Modal
-} from "semantic-ui-react";
+import { Grid, Table, Header, Icon, Button, Form } from "semantic-ui-react";
+import IngredientTable from "./ingredientTable";
+import { connect } from "react-redux";
 
 class Pantry extends Component {
-  state = { formValue: "" };
-
-  updateFormValue = e => {
-    this.setState({ formValue: e.target.value });
+  fetchIngredients = () => {
+    return fetch(
+      `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/autocomplete?number=10&&query=${
+        this.props.formValue
+      }`,
+      {
+        method: "GET",
+        headers: {
+          "X-RapidAPI-Host":
+            "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+          "X-RapidAPI-Key": "4e6e42e316msh9131f236a4faeb3p1b9bd7jsn9fd909c6c020"
+        }
+      }
+    )
+      .then(response => response.json())
+      .then(data =>
+        this.props.dispatch({ type: "TABLE_UPDATE", searchTable: data })
+      );
   };
 
-  searchSubmit = () => {
-    console.log(this.state.formValue);
+  updateFormValue = e => {
+    this.props.dispatch({ type: "FORM_UPDATE", formValue: e.target.value });
   };
 
   render() {
@@ -66,7 +73,7 @@ class Pantry extends Component {
               <Icon name="search plus" color="green" />
               <Header.Content>Search & Add Ingredients</Header.Content>
             </Header>
-            <Form onSubmit={this.searchSubmit}>
+            <Form onSubmit={this.fetchIngredients}>
               <Form.Group inline>
                 <Form.Field>
                   <label>Search For Ingredient</label>
@@ -77,45 +84,7 @@ class Pantry extends Component {
                 </Button>
               </Form.Group>
             </Form>
-            <Table color="green">
-              <Table.Body>
-                <Table.Row>
-                  <Table.Cell>
-                    <Image
-                      src="https://spoonacular.com/cdn/ingredients_100x100/apple.jpg"
-                      size="mini"
-                    />
-                  </Table.Cell>
-                  <Table.Cell>Apple</Table.Cell>
-                  <Table.Cell>
-                    <Modal
-                      trigger={
-                        <Button color="green" fluid>
-                          Add Ingredient
-                        </Button>
-                      }
-                      closeIcon
-                    >
-                      <Header icon="archive" content="Archive Old Messages" />
-                      <Modal.Content>
-                        <p>
-                          Your inbox is getting full, would you like us to
-                          enable automatic archiving of old messages?
-                        </p>
-                      </Modal.Content>
-                      <Modal.Actions>
-                        <Button color="red">
-                          <Icon name="remove" /> No
-                        </Button>
-                        <Button color="green">
-                          <Icon name="checkmark" /> Yes
-                        </Button>
-                      </Modal.Actions>
-                    </Modal>
-                  </Table.Cell>
-                </Table.Row>
-              </Table.Body>
-            </Table>
+            <IngredientTable />
           </Grid.Column>
         </Grid>
       </div>
@@ -123,4 +92,11 @@ class Pantry extends Component {
   }
 }
 
-export default Pantry;
+let mapStateToProps = state => {
+  return {
+    searchTable: state.pantry.searchTable,
+    formValue: state.pantry.formValue
+  };
+};
+
+export default connect(mapStateToProps)(Pantry);
