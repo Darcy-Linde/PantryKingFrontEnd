@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Table, Image, Form, Button, Header, Modal } from "semantic-ui-react";
+import { Table, Image, Form, Button, Modal } from "semantic-ui-react";
 import { connect } from "react-redux";
 
 const measurements = [
@@ -26,6 +26,18 @@ class IngredientTable extends Component {
     return array;
   };
 
+  state = { ingredient: "", quantity: 1, unit: "teaspoon" };
+
+  resetState = name => {
+    this.setState({ ingredient: name, quantity: 1, unit: "teaspoon" });
+  };
+
+  handleSubmit = () => {
+    console.log(this.state.ingredient);
+    console.log(this.state.quantity);
+    console.log(this.state.unit);
+  };
+
   render() {
     return (
       <Table color="green">
@@ -45,7 +57,11 @@ class IngredientTable extends Component {
                 <Table.Cell>
                   <Modal
                     trigger={
-                      <Button color="green" fluid>
+                      <Button
+                        color="green"
+                        fluid
+                        onClick={() => this.resetState(item.name)}
+                      >
                         Add Ingredient
                       </Button>
                     }
@@ -64,8 +80,14 @@ class IngredientTable extends Component {
                         }`}
                       />
 
-                      <Form>
-                        <Form.Field label="Select Quantity" control="select">
+                      <Form onSubmit={this.handleSubmit}>
+                        <Form.Field
+                          label="Select Quantity"
+                          control="select"
+                          onChange={e =>
+                            this.setState({ quantity: e.target.value })
+                          }
+                        >
                           {this.generate100().map(num => {
                             return <option value={num}>{num}</option>;
                           })}
@@ -73,6 +95,9 @@ class IngredientTable extends Component {
                         <Form.Field
                           label="Select Unit Measurement"
                           control="select"
+                          onChange={e =>
+                            this.setState({ unit: e.target.value })
+                          }
                         >
                           {measurements.map(unit => {
                             return <option value={unit}>{unit}</option>;
