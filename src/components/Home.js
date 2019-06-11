@@ -4,25 +4,17 @@ import Body from "./Body";
 import { connect } from "react-redux";
 
 class Home extends Component {
-  componentDidMount() {
-    fetch("http://localhost:3000/")
-      .then(res => res.json())
-      .then(data => this.props.dispatch({ type: "TEST", data: data }));
-  }
-
-  fetchUser4Data = () => {
-    fetch("http://localhost:3000/api/v1/users/4")
-      .then(res => res.json())
-      .then(data => console.log);
-  };
-
   render() {
-    return (
-      <Fragment>
-        <Nav />
-        <Body />
-      </Fragment>
-    );
+    {
+      if (localStorage.getItem("token")) {
+        return (
+          <Fragment>
+            <Nav />
+            <Body />
+          </Fragment>
+        );
+      } else return <h1>You need to be logged in to see this page!</h1>;
+    }
   }
 }
 

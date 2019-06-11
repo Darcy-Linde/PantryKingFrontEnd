@@ -32,10 +32,15 @@ class IngredientTable extends Component {
     this.setState({ ingredient: name, quantity: 1, unit: "teaspoon" });
   };
 
-  handleSubmit = () => {
+  handleSubmit = e => {
+    e.preventDefault();
     console.log(this.state.ingredient);
     console.log(this.state.quantity);
     console.log(this.state.unit);
+    fetch("http://localhost:3000/api/v1/ingredients", {
+      method: "POST",
+      Authorization: localStorage.getItem("token")
+    });
   };
 
   render() {

@@ -37,8 +37,8 @@ class Nav extends Component {
 
         <Menu.Item
           name="log out"
-          active={this.props.nav_item === "log out"}
-          onClick={this.handleItemClick}
+          href="/login"
+          onClick={e => localStorage.clear()}
         >
           <Icon name="power off" color="teal" />
           Log Out
