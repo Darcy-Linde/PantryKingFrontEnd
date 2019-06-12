@@ -52,9 +52,6 @@ class IngredientTable extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.modalClose();
-    console.log(this.state.ingredient);
-    console.log(this.state.quantity);
-    console.log(this.state.unit);
     console.log(localStorage.getItem("token"));
     fetch("http://localhost:3000/api/v1/ingredients", {
       method: "POST",
