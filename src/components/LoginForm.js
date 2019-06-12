@@ -21,6 +21,7 @@ class LoginForm extends Component {
         if (data.message) return null;
         else {
           localStorage.setItem("token", data.jwt);
+          localStorage.setItem("user_id", data.user_id);
           this.props.history.push("/home");
         }
       });
