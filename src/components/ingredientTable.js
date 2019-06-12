@@ -52,7 +52,6 @@ class IngredientTable extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.modalClose();
-    console.log(localStorage.getItem("token"));
     fetch("http://localhost:3000/api/v1/ingredients", {
       method: "POST",
       headers: {
@@ -62,11 +61,37 @@ class IngredientTable extends Component {
       body: JSON.stringify(this.state)
     })
       .then(res => res.json())
-      .then(data => this.postPantry(data));
+      .then(data => this.postPantry(data.id));
   };
 
-  postPantry = data => {
-    console.log(data);
+  postPantry = id => {
+    fetch("http://localhost:3000/api/v1/pantries", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token")
+      },
+      body: JSON.stringify({
+        ingredient_id: id,
+        amount: this.state.quantity,
+        unit: this.state.unit,
+        user_id: this.state.user_id
+      })
+    }).then(() => this.fetchUserIngredients());
+  };
+
+  fetchUserIngredients = () => {
+    fetch("http://localhost:3000/api/v1/pantries", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token")
+      }
+    })
+      .then(res => res.json())
+      .then(data =>
+        this.props.dispatch({ type: "USER_TABLE", userTable: data })
+      );
   };
 
   render() {

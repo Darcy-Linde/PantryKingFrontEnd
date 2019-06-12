@@ -1,9 +1,21 @@
 import React, { Component } from "react";
-import { Grid, Table, Header, Icon, Button, Form } from "semantic-ui-react";
+import {
+  Grid,
+  Table,
+  Header,
+  Icon,
+  Button,
+  Form,
+  Image
+} from "semantic-ui-react";
 import IngredientTable from "./ingredientTable";
 import { connect } from "react-redux";
 
 class Pantry extends Component {
+  componentDidMount() {
+    this.fetchUserIngredients();
+  }
+
   fetchIngredients = () => {
     return fetch(
       `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/autocomplete?number=10&&query=${
@@ -28,6 +40,20 @@ class Pantry extends Component {
     this.props.dispatch({ type: "FORM_UPDATE", formValue: e.target.value });
   };
 
+  fetchUserIngredients = () => {
+    fetch("http://localhost:3000/api/v1/pantries", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token")
+      }
+    })
+      .then(res => res.json())
+      .then(data =>
+        this.props.dispatch({ type: "USER_TABLE", userTable: data })
+      );
+  };
+
   render() {
     return (
       <div>
@@ -47,23 +73,34 @@ class Pantry extends Component {
                   <Table.HeaderCell />
                 </Table.Row>
               </Table.Header>
-
               <Table.Body>
-                <Table.Row>
-                  <Table.Cell>Apples</Table.Cell>
-                  <Table.Cell>200</Table.Cell>
-                  <Table.Cell>0g</Table.Cell>
-                  <Table.Cell>
-                    <Button fluid color="green">
-                      <Icon name="edit outline" /> Edit
-                    </Button>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Button fluid color="green">
-                      <Icon name="trash alternate outline" /> Delete
-                    </Button>
-                  </Table.Cell>
-                </Table.Row>
+                {this.props.userTable.map(item => {
+                  return (
+                    <Table.Row>
+                      <Table.Cell>
+                        <Image
+                          src={`https://spoonacular.com/cdn/ingredients_100x100/${
+                            item.info.image
+                          }`}
+                          size="mini"
+                        />
+                        {item.info.name}
+                      </Table.Cell>
+                      <Table.Cell>{item.amount}</Table.Cell>
+                      <Table.Cell>{item.unit}</Table.Cell>
+                      <Table.Cell>
+                        <Button fluid color="green">
+                          <Icon name="edit outline" /> Edit
+                        </Button>
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Button fluid color="green">
+                          <Icon name="trash alternate outline" /> Delete
+                        </Button>
+                      </Table.Cell>
+                    </Table.Row>
+                  );
+                })}
               </Table.Body>
             </Table>
           </Grid.Column>
@@ -95,7 +132,8 @@ class Pantry extends Component {
 let mapStateToProps = state => {
   return {
     searchTable: state.pantry.searchTable,
-    formValue: state.pantry.formValue
+    formValue: state.pantry.formValue,
+    userTable: state.pantry.userTable
   };
 };
 
