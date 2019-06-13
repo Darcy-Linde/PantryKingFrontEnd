@@ -6,11 +6,10 @@ export default (
     case "RECIPE_FORM_UPDATE":
       return {
         ...state,
-        recipeFormValue: action.recipeFormValue,
-        searchTable: state.searchTable
+        recipeFormValue: action.recipeFormValue
       };
     case "TABLE_UPDATE":
-      return { ...state, recipeFormValue: "", searchTable: action.searchTable };
+      return { ...state, searchTable: action.searchTable };
     case "USER_TABLE":
       return { ...state, userTable: action.userTable };
     default:

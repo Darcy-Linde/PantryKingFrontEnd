@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Grid, Header, Icon, Form, Button, Menu } from "semantic-ui-react";
 import { connect } from "react-redux";
+import RecipeTable from "./recipeTable";
 
 class Recipes extends Component {
   state = {
@@ -15,7 +16,6 @@ class Recipes extends Component {
   fetchRecipesByIngredients = () => {
     const ingredients = this.state.ingredients.join("%2C");
     const url = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?number=10&ranking=1&ignorePantry=false&ingredients=${ingredients}`;
-    console.log(url);
     return fetch(url, {
       method: "GET",
       headers: {
@@ -25,7 +25,9 @@ class Recipes extends Component {
       }
     })
       .then(response => response.json())
-      .then(data => console.log(data));
+      .then(data =>
+        this.props.dispatch({ type: "TABLE_UPDATE", searchTable: data })
+      );
   };
 
   updateRecipeFormValue = e => {
@@ -103,6 +105,7 @@ class Recipes extends Component {
               </Button>
             </Form>
           )}
+          <RecipeTable />
         </Grid.Column>
       </Grid>
     );
@@ -111,6 +114,7 @@ class Recipes extends Component {
 
 let mapStateToProps = state => {
   return {
+    searchTable: state.recipe.searchTable,
     recipeFormValue: state.recipe.recipeFormValue,
     userTable: state.pantry.userTable
   };
