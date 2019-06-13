@@ -5,16 +5,14 @@ import { connect } from "react-redux";
 
 class Home extends Component {
   render() {
-    {
-      if (localStorage.getItem("token")) {
-        return (
-          <Fragment>
-            <Nav />
-            <Body />
-          </Fragment>
-        );
-      } else return <h1>You need to be logged in to see this page!</h1>;
-    }
+    if (localStorage.getItem("token")) {
+      return (
+        <Fragment>
+          <Nav />
+          <Body />
+        </Fragment>
+      );
+    } else return <h1>You need to be logged in to see this page!</h1>;
   }
 }
 
