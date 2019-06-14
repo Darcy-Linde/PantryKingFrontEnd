@@ -23,8 +23,51 @@ class RecipeTable extends Component {
     this.setState({ modalOpen: false });
   };
 
-  handleSubmit = () => {
-    console.log("submitting...");
+  handleBookmark = () => {
+    this.modalClose();
+    fetch("http://localhost:3000/api/v1/recipes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token")
+      },
+      body: JSON.stringify(this.state)
+    })
+      .then(res => res.json())
+      .then(data => this.postCookbook(data.id));
+  };
+
+  postCookbook = id => {
+    fetch("http://localhost:3000/api/v1/pantries", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token")
+      },
+      body: JSON.stringify({
+        ingredient_id: id,
+        amount: this.state.quantity,
+        unit: this.state.unit,
+        user_id: this.state.user_id
+      })
+    }).then(() => this.fetchUserRecipes());
+  };
+
+  fetchUserRecipes = () => {
+    fetch("http://localhost:3000/api/v1/pantries", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token")
+      }
+    })
+      .then(res => res.json())
+      .then(data =>
+        this.props.dispatch({
+          type: "RECIPE_USER_TABLE",
+          recipeUserTable: data
+        })
+      );
   };
 
   fetchRecipe = id => {
@@ -132,7 +175,7 @@ class RecipeTable extends Component {
                       fluid
                       onClick={() => this.fetchRecipe(item.id)}
                     >
-                      View Recipe
+                      View
                     </Button>
                   </Table.Cell>
                 </Table.Row>

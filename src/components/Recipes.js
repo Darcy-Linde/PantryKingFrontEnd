@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { Grid, Header, Icon, Form, Button, Menu } from "semantic-ui-react";
+import {
+  Grid,
+  Header,
+  Icon,
+  Form,
+  Button,
+  Menu,
+  Table
+} from "semantic-ui-react";
 import { connect } from "react-redux";
 import RecipeTable from "./recipeTable";
 
@@ -59,6 +67,32 @@ class Recipes extends Component {
             <Icon name="food" color="grey" />
             <Header.Content>Your Recipes</Header.Content>
           </Header>
+          <Table color="yellow" inverted>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell>Title</Table.HeaderCell>
+                <Table.HeaderCell>Quick Info</Table.HeaderCell>
+                <Table.HeaderCell />
+                <Table.HeaderCell />
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              <Table.Row>
+                <Table.Cell>Example Recipe</Table.Cell>
+                <Table.Cell>Information at a glance</Table.Cell>
+                <Table.Cell>
+                  <Button color="yellow" fluid>
+                    <Icon name="eye" /> View
+                  </Button>
+                </Table.Cell>
+                <Table.Cell>
+                  <Button color="yellow" fluid>
+                    <Icon name="remove bookmark" /> Remove
+                  </Button>
+                </Table.Cell>
+              </Table.Row>
+            </Table.Body>
+          </Table>
         </Grid.Column>
         <Grid.Column width={1} />
         <Grid.Column width={5} className="userRecipeColumn">
