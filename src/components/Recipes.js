@@ -26,7 +26,10 @@ class Recipes extends Component {
     })
       .then(response => response.json())
       .then(data =>
-        this.props.dispatch({ type: "TABLE_UPDATE", searchTable: data })
+        this.props.dispatch({
+          type: "RECIPE_TABLE_UPDATE",
+          recipeSearchTable: data
+        })
       );
   };
 
@@ -87,7 +90,7 @@ class Recipes extends Component {
             <Form onSubmit={this.fetchRecipesByIngredients}>
               <Form.Group grouped>
                 <label>Select Ingredients</label>
-                {this.props.userTable.map(item => {
+                {this.props.ingredientUserTable.map(item => {
                   return (
                     <Form.Field
                       label={item.info.name}
@@ -114,9 +117,9 @@ class Recipes extends Component {
 
 let mapStateToProps = state => {
   return {
-    searchTable: state.recipe.searchTable,
+    recipeSearchTable: state.recipe.recipeSearchTable,
     recipeFormValue: state.recipe.recipeFormValue,
-    userTable: state.pantry.userTable
+    ingredientUserTable: state.pantry.ingredientUserTable
   };
 };
 

@@ -68,11 +68,10 @@ class RecipeTable extends Component {
           onClose={this.modalClose}
           scrolling
         >
-          <Modal.Header>
-            {this.state.title}
-            <br />
+          <Modal.Header>{this.state.title}</Modal.Header>
+          <Modal.Content>
             <Button color="yellow">Bookmark This Recipe!</Button>
-          </Modal.Header>
+          </Modal.Content>
           <Modal.Content image>
             <Image wrapped size="medium" src={this.state.image} />
           </Modal.Content>
@@ -106,7 +105,7 @@ class RecipeTable extends Component {
         </Modal>
         <Table color="yellow">
           <Table.Body>
-            {this.props.searchTable.map(item => {
+            {this.props.recipeSearchTable.map(item => {
               return (
                 <Table.Row>
                   <Table.Cell>
@@ -134,8 +133,8 @@ class RecipeTable extends Component {
 
 let mapStateToProps = state => {
   return {
-    recipeFormValue: state.recipe.formValue,
-    searchTable: state.recipe.searchTable
+    recipeFormValue: state.recipe.recipeFormValue,
+    recipeSearchTable: state.recipe.recipeSearchTable
   };
 };
 

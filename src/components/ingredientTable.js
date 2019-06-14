@@ -90,7 +90,10 @@ class IngredientTable extends Component {
     })
       .then(res => res.json())
       .then(data =>
-        this.props.dispatch({ type: "USER_TABLE", userTable: data })
+        this.props.dispatch({
+          type: "INGREDIENT_USER_TABLE",
+          inredientUserTable: data
+        })
       );
   };
 
@@ -142,7 +145,7 @@ class IngredientTable extends Component {
         </Modal>
         <Table color="green">
           <Table.Body>
-            {this.props.searchTable.map(item => {
+            {this.props.ingredientSearchTable.map(item => {
               return (
                 <Table.Row>
                   <Table.Cell>
@@ -175,8 +178,8 @@ class IngredientTable extends Component {
 
 let mapStateToProps = state => {
   return {
-    searchTable: state.pantry.searchTable,
-    formValue: state.pantry.formValue
+    ingredientSearchTable: state.pantry.ingredientSearchTable,
+    ingredientFormValue: state.pantry.ingredientFormValue
   };
 };
 

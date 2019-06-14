@@ -1,5 +1,5 @@
 export default (
-  state = { recipeFormValue: "", searchTable: [], userTable: [] },
+  state = { recipeFormValue: "", recipeSearchTable: [], recipeUserTable: [] },
   action
 ) => {
   switch (action.type) {
@@ -8,10 +8,10 @@ export default (
         ...state,
         recipeFormValue: action.recipeFormValue
       };
-    case "TABLE_UPDATE":
-      return { ...state, searchTable: action.searchTable };
-    case "USER_TABLE":
-      return { ...state, userTable: action.userTable };
+    case "RECIPE_TABLE_UPDATE":
+      return { ...state, recipeSearchTable: action.recipeSearchTable };
+    case "RECIPE_USER_TABLE":
+      return { ...state, recipeUserTable: action.recipeUserTable };
     default:
       return state;
   }

@@ -1,18 +1,26 @@
 export default (
-  state = { formValue: "", searchTable: [], userTable: [] },
+  state = {
+    ingredientFormValue: "",
+    ingredientSearchTable: [],
+    ingredientUserTable: []
+  },
   action
 ) => {
   switch (action.type) {
-    case "FORM_UPDATE":
+    case "INGREDIENT_FORM_UPDATE":
       return {
         ...state,
-        formValue: action.formValue,
-        searchTable: state.searchTable
+        ingredientFormValue: action.ingredientFormValue,
+        ingredientSearchTable: state.ingredientSearchTable
       };
-    case "TABLE_UPDATE":
-      return { ...state, formValue: "", searchTable: action.searchTable };
-    case "USER_TABLE":
-      return { ...state, userTable: action.userTable };
+    case "INGREDIENT_TABLE_UPDATE":
+      return {
+        ...state,
+        ingredientFormValue: "",
+        ingredientSearchTable: action.ingredientSearchTable
+      };
+    case "INGREDIENT_USER_TABLE":
+      return { ...state, ingredientUserTable: action.ingredientUserTable };
     default:
       return state;
   }

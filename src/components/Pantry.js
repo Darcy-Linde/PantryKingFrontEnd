@@ -84,7 +84,7 @@ class Pantry extends Component {
   fetchIngredients = () => {
     return fetch(
       `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/autocomplete?number=10&&query=${
-        this.props.formValue
+        this.props.ingredientFormValue
       }`,
       {
         method: "GET",
@@ -97,12 +97,18 @@ class Pantry extends Component {
     )
       .then(response => response.json())
       .then(data =>
-        this.props.dispatch({ type: "TABLE_UPDATE", searchTable: data })
+        this.props.dispatch({
+          type: "INGREDIENT_TABLE_UPDATE",
+          ingredientSearchTable: data
+        })
       );
   };
 
   updateFormValue = e => {
-    this.props.dispatch({ type: "FORM_UPDATE", formValue: e.target.value });
+    this.props.dispatch({
+      type: "INGREDIENT_FORM_UPDATE",
+      ingredientFormValue: e.target.value
+    });
   };
 
   fetchUserIngredients = () => {
@@ -115,7 +121,10 @@ class Pantry extends Component {
     })
       .then(res => res.json())
       .then(data =>
-        this.props.dispatch({ type: "USER_TABLE", userTable: data })
+        this.props.dispatch({
+          type: "INGREDIENT_USER_TABLE",
+          ingredientUserTable: data
+        })
       );
   };
 
@@ -191,7 +200,7 @@ class Pantry extends Component {
                   </Table.Row>
                 </Table.Header>
                 <Table.Body>
-                  {this.props.userTable.map(item => {
+                  {this.props.ingredientUserTable.map(item => {
                     return (
                       <Table.Row>
                         <Table.Cell>
@@ -263,9 +272,9 @@ class Pantry extends Component {
 
 let mapStateToProps = state => {
   return {
-    searchTable: state.pantry.searchTable,
-    formValue: state.pantry.formValue,
-    userTable: state.pantry.userTable
+    ingredientSearchTable: state.pantry.ingredientSearchTable,
+    ingredientFormValue: state.pantry.ingredientFormValue,
+    ingredientUserTable: state.pantry.ingredientUserTable
   };
 };
 
