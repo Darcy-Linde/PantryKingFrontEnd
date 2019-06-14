@@ -49,3 +49,7 @@ code {
 .userRecipeColumn {
   margin: 10px;
 }
+
+#error {
+  color: #ff0000;
+}

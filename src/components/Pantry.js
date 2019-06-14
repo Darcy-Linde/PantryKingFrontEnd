@@ -7,7 +7,8 @@ import {
   Button,
   Form,
   Image,
-  Modal
+  Modal,
+  List
 } from "semantic-ui-react";
 import IngredientTable from "./ingredientTable";
 import { connect } from "react-redux";
@@ -204,13 +205,19 @@ class Pantry extends Component {
                     return (
                       <Table.Row>
                         <Table.Cell>
-                          <Image
-                            src={`https://spoonacular.com/cdn/ingredients_100x100/${
-                              item.info.image
-                            }`}
-                            size="mini"
-                          />
-                          {item.info.name}
+                          <List horizontal relaxed>
+                            <List.Item>
+                              <Image
+                                src={`https://spoonacular.com/cdn/ingredients_100x100/${
+                                  item.info.image
+                                }`}
+                                size="mini"
+                              />
+                              <List.Content>
+                                <List.Header>{item.info.name}</List.Header>
+                              </List.Content>
+                            </List.Item>
+                          </List>
                         </Table.Cell>
                         <Table.Cell>{item.amount}</Table.Cell>
                         <Table.Cell>{item.unit}</Table.Cell>

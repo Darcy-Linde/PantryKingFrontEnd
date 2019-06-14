@@ -59,7 +59,23 @@ class Recipes extends Component {
   };
 
   fetchRecipesByKeyword = () => {
-    console.log("fetching...");
+    const query = this.props.recipeFormValue;
+    const url = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/searchComplex?query=${query}&limitLicense=false&offset=0&number=10`;
+    return fetch(url, {
+      method: "GET",
+      headers: {
+        "X-RapidAPI-Host":
+          "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+        "X-RapidAPI-Key": "4e6e42e316msh9131f236a4faeb3p1b9bd7jsn9fd909c6c020"
+      }
+    })
+      .then(response => response.json())
+      .then(data =>
+        this.props.dispatch({
+          type: "RECIPE_TABLE_UPDATE",
+          recipeSearchTable: data.results
+        })
+      );
   };
 
   fetchRecipesByIngredients = () => {
@@ -131,7 +147,7 @@ class Recipes extends Component {
     } else this.setState({ ingredients: [...array, name] });
   };
 
-  deleteUserRecipe = id => {
+  removeUserRecipe = id => {
     fetch(`http://localhost:3000/api/v1/cookbooks/${id}`, {
       method: "DELETE",
       headers: {
@@ -207,7 +223,7 @@ class Recipes extends Component {
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell>Recipe</Table.HeaderCell>
-                  <Table.HeaderCell>Prep Time</Table.HeaderCell>
+
                   <Table.HeaderCell />
                   <Table.HeaderCell />
                 </Table.Row>
@@ -217,11 +233,14 @@ class Recipes extends Component {
                   return (
                     <Table.Row>
                       <Table.Cell>
-                        <Image src={item.info.image} size="mini" />
-                        {item.info.title}
-                      </Table.Cell>
-                      <Table.Cell>
-                        {item.info.preparation_minutes} Minutes
+                        <List horizontal relaxed>
+                          <List.Item>
+                            <Image src={item.info.image} size="mini" />
+                            <List.Content>
+                              <List.Header>{item.info.title}</List.Header>
+                            </List.Content>
+                          </List.Item>
+                        </List>
                       </Table.Cell>
                       <Table.Cell>
                         <Button
@@ -233,7 +252,11 @@ class Recipes extends Component {
                         </Button>
                       </Table.Cell>
                       <Table.Cell>
-                        <Button color="yellow" fluid>
+                        <Button
+                          color="yellow"
+                          fluid
+                          onClick={() => this.removeUserRecipe(item.id)}
+                        >
                           <Icon name="remove bookmark" /> Remove
                         </Button>
                       </Table.Cell>
