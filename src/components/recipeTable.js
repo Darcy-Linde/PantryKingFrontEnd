@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Modal, Image, Table, Button, Icon } from "semantic-ui-react";
+import { Modal, Image, Table, Button, Icon, List } from "semantic-ui-react";
 import { connect } from "react-redux";
 
 class RecipeTable extends Component {
@@ -76,27 +76,41 @@ class RecipeTable extends Component {
             <Image wrapped size="medium" src={this.state.image} />
           </Modal.Content>
           <Modal.Content>
-            <a href={this.state.sourceUrl}>{this.state.sourceUrl}</a>
+            <a
+              href={this.state.sourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {this.state.sourceUrl}
+            </a>
           </Modal.Content>
           <Modal.Content>
             <Modal.Content>
               <Icon name="clock outline" color="black" />
               {this.state.readyInMinutes} Minutes
+              <br />
+              <Icon name="food" color="black" />
+              Serves {this.state.servings}
             </Modal.Content>
             <h2>Ingredients</h2>
-            <ul>
+            <List divided verticalAlign="middle">
               {this.state.extendedIngredients.map(item => (
-                <li>
+                <List.Item>
                   <Image
                     src={`https://spoonacular.com/cdn/ingredients_100x100/${
                       item.image
                     }`}
                     size="mini"
                   />
-                  {item.name}
-                </li>
+                  <List.Content>
+                    <List.Header>{item.name}</List.Header>
+                    <List.Description>
+                      {item.amount} {item.unit}
+                    </List.Description>
+                  </List.Content>
+                </List.Item>
               ))}
-            </ul>
+            </List>
           </Modal.Content>
           <Modal.Content>
             <h2>Instructions</h2>
