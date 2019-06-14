@@ -31,30 +31,43 @@ class RecipeTable extends Component {
         "Content-Type": "application/json",
         Authorization: localStorage.getItem("token")
       },
-      body: JSON.stringify(this.state)
+      body: JSON.stringify({
+        api_id: this.state.apiId,
+        title: this.state.title,
+        image: this.state.image,
+        instructions: this.state.instructions,
+        servings: this.state.servings,
+        preparation_minutes: this.state.preparationMinutes,
+        cooking_minutes: this.state.cookingMinutes,
+        ready_in_minutes: this.state.readyInMinutes,
+        price_per_serving: this.state.pricePerServing,
+        source_url: this.state.sourceUrl,
+        vegetarian: false,
+        vegan: false,
+        gluten_free: false,
+        dairy_free: false
+      })
     })
       .then(res => res.json())
       .then(data => this.postCookbook(data.id));
   };
 
   postCookbook = id => {
-    fetch("http://localhost:3000/api/v1/pantries", {
+    fetch("http://localhost:3000/api/v1/cookbooks", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: localStorage.getItem("token")
       },
       body: JSON.stringify({
-        ingredient_id: id,
-        amount: this.state.quantity,
-        unit: this.state.unit,
+        recipe_id: id,
         user_id: this.state.user_id
       })
     }).then(() => this.fetchUserRecipes());
   };
 
   fetchUserRecipes = () => {
-    fetch("http://localhost:3000/api/v1/pantries", {
+    fetch("http://localhost:3000/api/v1/cookbooks", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -113,7 +126,9 @@ class RecipeTable extends Component {
         >
           <Modal.Header>{this.state.title}</Modal.Header>
           <Modal.Content>
-            <Button color="yellow">Bookmark This Recipe!</Button>
+            <Button color="yellow" onClick={() => this.handleBookmark()}>
+              Bookmark This Recipe!
+            </Button>
           </Modal.Content>
           <Modal.Content image>
             <Image wrapped size="medium" src={this.state.image} />
