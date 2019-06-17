@@ -27,12 +27,12 @@ class Nav extends Component {
         </Menu.Item>
 
         <Menu.Item
-          name="SHOPPING_LIST"
-          active={this.props.nav_item === "SHOPPING_LIST"}
+          name="MEALS"
+          active={this.props.nav_item === "MEALS"}
           onClick={this.handleItemClick}
         >
-          <Icon name="list alternate outline" color="olive" />
-          Shopping List
+          <Icon name="checked calendar" color="olive" />
+          Meals
         </Menu.Item>
 
         <Menu.Item

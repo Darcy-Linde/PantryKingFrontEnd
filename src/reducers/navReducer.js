@@ -4,8 +4,8 @@ export default (state = { activeItem: "PANTRY" }, action) => {
       return { activeItem: "PANTRY" };
     case "RECIPES":
       return { activeItem: "RECIPES" };
-    case "SHOPPING_LIST":
-      return { activeItem: "SHOPPING_LIST" };
+    case "MEALS":
+      return { activeItem: "MEALS" };
     default:
       return state;
   }

@@ -1,7 +1,7 @@
 import React from "react";
 import Recipes from "./Recipes";
 import Pantry from "./Pantry";
-import List from "./List";
+import Meals from "./Meals";
 import { connect } from "react-redux";
 
 const Body = props => {
@@ -10,8 +10,8 @@ const Body = props => {
       return <Pantry />;
     case "RECIPES":
       return <Recipes />;
-    case "SHOPPING_LIST":
-      return <List />;
+    case "MEALS":
+      return <Meals />;
     default:
       return <Pantry />;
   }
