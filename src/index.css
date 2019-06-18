@@ -53,3 +53,7 @@ code {
 #error {
   color: #ff0000;
 }
+
+.dateTable {
+  margin: 10px;
+}

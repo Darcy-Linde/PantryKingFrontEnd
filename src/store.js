@@ -3,12 +3,14 @@ import signUpReducer from "./reducers/signUpReducer";
 import navReducer from "./reducers/navReducer";
 import pantryReducer from "./reducers/pantryReducer";
 import recipeReducer from "./reducers/recipeReducer";
+import mealReducer from "./reducers/mealReducer";
 
 const rootReducer = combineReducers({
   signUp: signUpReducer,
   nav: navReducer,
   pantry: pantryReducer,
-  recipe: recipeReducer
+  recipe: recipeReducer,
+  meal: mealReducer
 });
 
 const store = createStore(

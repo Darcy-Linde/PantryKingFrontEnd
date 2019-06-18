@@ -31,7 +31,7 @@ class Nav extends Component {
           active={this.props.nav_item === "MEALS"}
           onClick={this.handleItemClick}
         >
-          <Icon name="checked calendar" color="olive" />
+          <Icon name="calendar alternate outline" color="olive" />
           Meals
         </Menu.Item>
 
