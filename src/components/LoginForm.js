@@ -1,5 +1,13 @@
-import React, { Component } from "react";
-import { Button, Form, Grid, Header, Image, Segment } from "semantic-ui-react";
+import React, { createRef, Component } from "react";
+import {
+  Button,
+  Form,
+  Grid,
+  Header,
+  Image,
+  Segment,
+  Popup
+} from "semantic-ui-react";
 
 class LoginForm extends Component {
   state = {
@@ -8,6 +16,8 @@ class LoginForm extends Component {
     error: false,
     errorMessage: "Invalid Username-Password Combination"
   };
+
+  contextRef = createRef();
 
   handleSubmit = e => {
     e.preventDefault();
@@ -54,6 +64,13 @@ class LoginForm extends Component {
                 onChange={e => this.setState({ username: e.target.value })}
                 error={this.state.error}
               />
+              <p ref={this.contextRef} />
+              <Popup
+                context={this.contextRef}
+                content={this.state.errorMessage}
+                position="right center"
+                open={this.state.error}
+              />
               <Form.Input
                 fluid
                 icon="lock"
@@ -64,9 +81,6 @@ class LoginForm extends Component {
                 onChange={e => this.setState({ password: e.target.value })}
                 error={this.state.error}
               />
-              {this.state.error ? (
-                <h6 id="error">{this.state.errorMessage}</h6>
-              ) : null}
               <Button id="loginFormButton" fluid size="large">
                 Login
               </Button>
