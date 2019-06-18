@@ -4,7 +4,9 @@ import { Button, Form, Grid, Header, Image, Segment } from "semantic-ui-react";
 class LoginForm extends Component {
   state = {
     username: "",
-    password: ""
+    password: "",
+    error: false,
+    errorMessage: "Invalid Username-Password Combination"
   };
 
   handleSubmit = e => {
@@ -18,8 +20,10 @@ class LoginForm extends Component {
     })
       .then(res => res.json())
       .then(data => {
-        if (data.message) return null;
-        else {
+        if (data.message) {
+          this.setState({ error: true });
+          return null;
+        } else {
           localStorage.setItem("token", data.jwt);
           localStorage.setItem("user_id", data.user_id);
           this.props.history.push("/home");
@@ -48,6 +52,7 @@ class LoginForm extends Component {
                 name="username"
                 placeholder="Username"
                 onChange={e => this.setState({ username: e.target.value })}
+                error={this.state.error}
               />
               <Form.Input
                 fluid
@@ -57,8 +62,11 @@ class LoginForm extends Component {
                 placeholder="Password"
                 type="password"
                 onChange={e => this.setState({ password: e.target.value })}
+                error={this.state.error}
               />
-
+              {this.state.error ? (
+                <h6 id="error">{this.state.errorMessage}</h6>
+              ) : null}
               <Button id="loginFormButton" fluid size="large">
                 Login
               </Button>

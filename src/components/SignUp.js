@@ -1,19 +1,23 @@
-import React, { Component } from "react";
+import React, { createRef, Component } from "react";
 import {
   Button,
   Form,
   Grid,
   Header,
   Image,
-  Container
+  Container,
+  Popup
 } from "semantic-ui-react";
 
 class SignUp extends Component {
   state = {
     username: "",
     password: "",
-    error: ""
+    errorMessage: "",
+    error: false
   };
+
+  contextRef = createRef();
 
   createUser = () => {
     fetch("http://localhost:3000/api/v1/users", {
@@ -29,8 +33,8 @@ class SignUp extends Component {
   };
 
   handleError = data => {
-    if (data.error === "Username Already Taken")
-      this.setState({ error: "Username Already Taken" });
+    if (data.errorMessage === "Username Already Taken")
+      this.setState({ errorMessage: "Username Already Taken", error: true });
     else this.props.history.push("/login");
   };
 
@@ -48,13 +52,19 @@ class SignUp extends Component {
               <Image src="/images/PantryKingLogo.png" /> Sign up for a pantry
             </Header>
             <Form onSubmit={this.createUser} className={this.state.error}>
-              <Form.Field inline>
+              <Form.Field inline error={this.state.error}>
                 <label>Username</label>
                 <input
                   placeholder="Username"
                   onChange={e => this.setState({ username: e.target.value })}
                 />
-                <h6 id="error">{this.state.error}</h6>
+                <p ref={this.contextRef} />
+                <Popup
+                  context={this.contextRef}
+                  content={this.state.errorMessage}
+                  position="right center"
+                  open={this.state.error}
+                />
               </Form.Field>
               <Form.Field inline>
                 <label>Password</label>
