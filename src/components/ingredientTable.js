@@ -92,7 +92,7 @@ class IngredientTable extends Component {
       .then(data =>
         this.props.dispatch({
           type: "INGREDIENT_USER_TABLE",
-          inredientUserTable: data
+          ingredientUserTable: data
         })
       );
   };

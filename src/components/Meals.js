@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { createRef, Component } from "react";
 import DatePicker from "react-date-picker";
 import {
   Grid,
@@ -8,7 +8,8 @@ import {
   List,
   Button,
   Image,
-  Form
+  Form,
+  Popup
 } from "semantic-ui-react";
 import { connect } from "react-redux";
 
@@ -43,7 +44,9 @@ class Meals extends Component {
     image: "",
     title: "",
     api_id: 0,
-    user_id: localStorage.user_id
+    user_id: localStorage.user_id,
+    noRecipes: false,
+    message: "Make a recipe selection"
   };
 
   componentDidMount() {
@@ -52,6 +55,8 @@ class Meals extends Component {
   }
 
   onChange = date => this.setState({ date });
+
+  contextRef = createRef();
 
   filterMeals = array => {
     const day = this.dayFormatter(this.state.date.getDate());
@@ -101,7 +106,11 @@ class Meals extends Component {
           type: "RECIPE_USER_TABLE",
           recipeUserTable: data
         })
-      );
+      )
+      .then(() => {
+        if (this.props.recipeUserTable.length === 0)
+          this.setState({ message: "You have no recipes to add!" });
+      });
   };
 
   fetchMeals = () => {
@@ -126,22 +135,26 @@ class Meals extends Component {
   };
 
   handleAddMeal = () => {
-    fetch("http://localhost:3000/api/v1/meals", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: localStorage.getItem("token")
-      },
-      body: JSON.stringify({
-        user_id: this.state.user_id,
-        image: this.state.image,
-        title: this.state.title,
-        api_id: this.state.api_id,
-        date: this.dateFormatter(this.state.date)
-      })
-    }).then(() => this.fetchMeals());
+    if (this.state.image === "") {
+      this.setState({ noRecipes: true });
+      return null;
+    } else {
+      fetch("http://localhost:3000/api/v1/meals", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token")
+        },
+        body: JSON.stringify({
+          user_id: this.state.user_id,
+          image: this.state.image,
+          title: this.state.title,
+          api_id: this.state.api_id,
+          date: this.dateFormatter(this.state.date)
+        })
+      }).then(() => this.fetchMeals());
+    }
   };
-
   removeMeal = id => {
     fetch(`http://localhost:3000/api/v1/meals/${id}`, {
       method: "DELETE",
@@ -205,6 +218,13 @@ class Meals extends Component {
                   <Button color="olive" type="submit">
                     Add Meal
                   </Button>
+                  <p ref={this.contextRef} />
+                  <Popup
+                    context={this.contextRef}
+                    content={this.state.message}
+                    position="right center"
+                    open={this.state.noRecipes}
+                  />
                 </Header.Content>
               </Header>
               <Form.Group grouped>
